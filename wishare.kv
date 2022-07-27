@@ -7,6 +7,9 @@ MainWindow:
 <MainWindow@BoxLayout>:
     orientation:  "vertical"
 
+    # +------------------------------------------------------------+
+    # | Header                                                     |
+    # +------------------------------------------------------------+
     Label:
         text: "WiShare"
         font_size: "24dp"
@@ -22,9 +25,12 @@ MainWindow:
 
     Label:
         text: "Easily share your files from here, and get it all in your browser on an other device."
+        text_size: self.width, None
         font_size: "16dp"
-        multiline: True
         color: 0, 0, 0
+        padding: "20dp", "20dp"
+        size_hint : 1, None
+        height: self.texture_size[1]
 
         canvas.before:
             Color:
@@ -33,8 +39,9 @@ MainWindow:
                 size: self.size
                 pos: self.pos
 
-        size_hint : 1, .3
-
+    # +------------------------------------------------------------+
+    # | Main                                                       |
+    # +------------------------------------------------------------+
     BoxLayout:
         orientation: "vertical"
         padding: "20dp"
@@ -67,8 +74,13 @@ MainWindow:
             height: "60dp"
 
         Label:
-            text: "Status: nothing is shared now..."
+            text: "Status : nothing is shared now ... "
+            text_size: self.width, None
             color: 0, 0, 0
+            padding: "20dp", "20dp"
+            size_hint: 1, None
+            height: self.texture_size[1]
+
             canvas.before:
                 Color:
                     rgba: hex("#80d0ff")
@@ -82,11 +94,16 @@ MainWindow:
             size_hint: 1, None
             height: "60dp"
 
+    # +------------------------------------------------------------+
+    # | Footer                                                     |
+    # +------------------------------------------------------------+
     Label:
         text: "•CreativeMind"
         font_name: "fonts/CreativeMind.ttf"
         font_size: "36px"
         color: 0, 0, 0
+        size_hint: 1, None
+        height: "72px"
 
         canvas.before:
             Color:
@@ -94,13 +111,13 @@ MainWindow:
             Rectangle:
                 size: self.size
                 pos: self.pos
-
-        size_hint: 1, None
-        height: "72px"
 
     Label:
         text: "©2022 - WiShare v1 - Antares Mugisho"
         color: hex("#e1e1e1")
+        size_hint: 1, None
+        height: "30px"
+
         canvas.before:
             Color:
                 rgba: hex("#0593e6")
@@ -108,5 +125,3 @@ MainWindow:
                 size: self.size
                 pos: self.pos
 
-        size_hint: 1, None
-        height: "30px"
