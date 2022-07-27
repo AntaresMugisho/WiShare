@@ -4,7 +4,7 @@
 
 MainWindow:
 
-<MainWindow@BoxLayout>:
+<MainWindow>:
     orientation:  "vertical"
 
     # +------------------------------------------------------------+
@@ -14,14 +14,13 @@ MainWindow:
         text: "WiShare"
         font_size: "24dp"
         bold: True
+        size_hint: 1, .2
         canvas.before:
             Color:
                 rgba: hex("#0593e6")
             Rectangle:
                 size: self.size
                 pos: self.pos
-
-        size_hint: 1, .2
 
     Label:
         text: "Easily share your files from here, and get it all in your browser on an other device."
@@ -66,15 +65,19 @@ MainWindow:
             Button:
                 text: "Choose Directory"
                 size_hint: .3, 1
+                on_press: root.choose_directory()
 
         Button:
+            id: start_btn
             text: "START SHARING"
             background_color: hex("#00ff00")
             size_hint: 1, None
             height: "60dp"
+            disabled: False
+            on_press: root.start_server()
 
         Label:
-            text: "Status : nothing is shared now ... "
+            text: root.addr
             text_size: self.width, None
             color: 0, 0, 0
             padding: "20dp", "20dp"
@@ -93,6 +96,8 @@ MainWindow:
             background_color: hex("#ff0000")
             size_hint: 1, None
             height: "60dp"
+            disabled: not start_btn.disabled
+            on_press: root.stop_server()
 
     # +------------------------------------------------------------+
     # | Footer                                                     |
