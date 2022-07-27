@@ -18,7 +18,7 @@ MainWindow:
                 size: self.size
                 pos: self.pos
 
-        size_hint: 1, ".3dp"
+        size_hint: 1, .2
 
     Label:
         text: "Easily share your files from here, and get it all in your browser on an other device."
@@ -33,26 +33,80 @@ MainWindow:
                 size: self.size
                 pos: self.pos
 
-        size_hint : 1, ".4dp"
+        size_hint : 1, .3
 
     BoxLayout:
         orientation: "vertical"
         padding: "20dp"
         spacing: "30dp"
 
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
         BoxLayout:
             orientation: "horizontal"
+            spacing: "10dp"
+            size_hint: 1, None
+            height: "60dp"
 
             TextInput:
                 multiline: False
 
             Button:
-                text: "Choose directory..."
+                text: "Choose Directory"
+                size_hint: .3, 1
 
         Button:
             text: "START SHARING"
             background_color: hex("#00ff00")
+            size_hint: 1, None
+            height: "60dp"
+
+        Label:
+            text: "Status: nothing is shared now..."
+            color: 0, 0, 0
+            canvas.before:
+                Color:
+                    rgba: hex("#80d0ff")
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
 
         Button:
             text: "STOP SHARING"
             background_color: hex("#ff0000")
+            size_hint: 1, None
+            height: "60dp"
+
+    Label:
+        text: "•CreativeMind"
+        font_name: "fonts/CreativeMind.ttf"
+        font_size: "36px"
+        color: 0, 0, 0
+
+        canvas.before:
+            Color:
+                rgba: hex("#0593e6")
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+        size_hint: 1, None
+        height: "72px"
+
+    Label:
+        text: "©2022 - WiShare v1 - Antares Mugisho"
+        color: hex("#e1e1e1")
+        canvas.before:
+            Color:
+                rgba: hex("#0593e6")
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+        size_hint: 1, None
+        height: "30px"
