@@ -1,0 +1,58 @@
+# This kv file uses the following encoding: utf-8
+
+#:import hex kivy.utils.get_color_from_hex
+
+MainWindow:
+
+<MainWindow@BoxLayout>:
+    orientation:  "vertical"
+
+    Label:
+        text: "WiShare"
+        font_size: "24dp"
+        bold: True
+        canvas.before:
+            Color:
+                rgba: hex("#0593e6")
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+        size_hint: 1, ".3dp"
+
+    Label:
+        text: "Easily share your files from here, and get it all in your browser on an other device."
+        font_size: "16dp"
+        multiline: True
+        color: 0, 0, 0
+
+        canvas.before:
+            Color:
+                rgba: hex("#80d0ff")
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+        size_hint : 1, ".4dp"
+
+    BoxLayout:
+        orientation: "vertical"
+        padding: "20dp"
+        spacing: "30dp"
+
+        BoxLayout:
+            orientation: "horizontal"
+
+            TextInput:
+                multiline: False
+
+            Button:
+                text: "Choose directory..."
+
+        Button:
+            text: "START SHARING"
+            background_color: hex("#00ff00")
+
+        Button:
+            text: "STOP SHARING"
+            background_color: hex("#ff0000")
