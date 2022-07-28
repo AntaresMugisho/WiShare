@@ -5,7 +5,7 @@
 
 
 from kivy.app import App
-from kivy.properties import StringProperty
+from kivy.properties import StringProperty, ObjectProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
 
@@ -16,18 +16,21 @@ PATH = ""
 class MainWindow(BoxLayout):
 
     addr = StringProperty("Link : nothing is shared now ..." )
+    #stop_btn = ObjectProperty()
     server = Server()
 
     def start_server(self):
         self.addr = f"Type this link in your browser : http://{self.server.get_ip()}:{Server.PORT}"
-        th = Thread(target=self.server.launch_server)
-        th.start()
+        Thread(target=self.server.start_server).start()
+
+        self.ids.start_btn.disabled = True
+        self.ids.stop_btn.disabled = False
 
     def stop_server(self):
-        try:
-            self.server.close_server()
-        except Exception as e:
-            print(e)
+        self.server.close_server()
+
+        self.ids.start_btn.disabled = False
+        self.ids.stop_btn.disabled = True
 
     def choose_directory(self):
         pass

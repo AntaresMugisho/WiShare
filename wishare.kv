@@ -8,6 +8,7 @@ MainWindow:
 # | Main Window                                                |
 # +------------------------------------------------------------+
 <MainWindow>:
+
     orientation:  "vertical"
     canvas.before:
         Color:
@@ -65,6 +66,7 @@ MainWindow:
                 multiline: False
 
             Button:
+                id: choose_dir_btn
                 text: "Choose Directory"
                 size_hint: .3, 1
                 on_press: root.choose_directory()
@@ -94,11 +96,12 @@ MainWindow:
                     pos: self.pos
 
         Button:
+            id: stop_btn
             text: "STOP SHARING"
             background_color: hex("#ff0000")
             size_hint: 1, None
             height: "60dp"
-            disabled: not start_btn.disabled
+            disabled: True
             on_press: root.stop_server()
 
     # +------------------------------------------------------------+
@@ -186,9 +189,4 @@ MainWindow:
         pos_hint: {"right" : 1}
         width: "100dp"
         height: "40dp"
-
         #on_press: close this chooser dialogue
-
-
-
-
