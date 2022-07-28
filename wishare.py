@@ -3,24 +3,20 @@
 # +------------------------------------------------------------+
 
 
-# User Interface importing
 
 from kivy.app import App
 from kivy.properties import StringProperty
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.floatlayout import FloatLayout
 
-# Callbacks importing
 from server import Server
 from threading import Thread
 
-
+PATH = ""
 class MainWindow(BoxLayout):
 
     addr = StringProperty("Link : nothing is shared now ..." )
     server = Server()
-
-    def choose_directory(self):
-        pass
 
     def start_server(self):
         self.addr = f"Type this link in your browser : http://{self.server.get_ip()}:{Server.PORT}"
@@ -33,10 +29,25 @@ class MainWindow(BoxLayout):
         except Exception as e:
             print(e)
 
+    def choose_directory(self):
+        pass
+
+
+class DirectoryChooser(BoxLayout):
+
+    def select(self, *args):
+        try:
+            PATH = args #[1][0]
+            print(PATH)
+        except Exception as e:
+            print("ERROR: ", e)
+
 
 
 class WiShareApp(App):
     pass
 
+
+# Run the App
 if __name__ == "__main__":
     WiShareApp().run()

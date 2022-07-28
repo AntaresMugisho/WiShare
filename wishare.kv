@@ -4,8 +4,17 @@
 
 MainWindow:
 
+# +------------------------------------------------------------+
+# | Main Window                                                |
+# +------------------------------------------------------------+
 <MainWindow>:
     orientation:  "vertical"
+    canvas.before:
+        Color:
+            rgb: 1, 1, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
 
     # +------------------------------------------------------------+
     # | Header                                                     |
@@ -17,7 +26,7 @@ MainWindow:
         size_hint: 1, .2
         canvas.before:
             Color:
-                rgba: hex("#0593e6")
+                rgb: hex("#0593e6")
             Rectangle:
                 size: self.size
                 pos: self.pos
@@ -33,7 +42,7 @@ MainWindow:
 
         canvas.before:
             Color:
-                rgba: hex("#80d0ff")
+                rgb: hex("#80d0ff")
             Rectangle:
                 size: self.size
                 pos: self.pos
@@ -45,13 +54,6 @@ MainWindow:
         orientation: "vertical"
         padding: "20dp"
         spacing: "30dp"
-
-        canvas.before:
-            Color:
-                rgba: 1, 1, 1, 1
-            Rectangle:
-                size: self.size
-                pos: self.pos
 
         BoxLayout:
             orientation: "horizontal"
@@ -86,7 +88,7 @@ MainWindow:
 
             canvas.before:
                 Color:
-                    rgba: hex("#80d0ff")
+                    rgb: hex("#80d0ff")
                 Rectangle:
                     size: self.size
                     pos: self.pos
@@ -112,7 +114,7 @@ MainWindow:
 
         canvas.before:
             Color:
-                rgba: hex("#0593e6")
+                rgb: hex("#0593e6")
             Rectangle:
                 size: self.size
                 pos: self.pos
@@ -125,8 +127,68 @@ MainWindow:
 
         canvas.before:
             Color:
-                rgba: hex("#0593e6")
+                rgb: hex("#0593e6")
             Rectangle:
                 size: self.size
                 pos: self.pos
+
+
+# +------------------------------------------------------------+
+# | File Chooser                                               |
+# +------------------------------------------------------------+
+<DirectoryChooser>:
+	# Providing the orientation
+	orientation: 'vertical'
+	size_hint: .9, .8
+	pos_hint: {"center_x": .5, "center_y": .5}
+
+	canvas.before:
+        Color:
+            rgb: hex("#024e63")
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    Label:
+        text: "Select a directory"
+        bold: True
+        size_hint: 1, None
+        height: "40dp"
+
+    Label:
+        size_hint: 1, None
+        height: "1dp"
+        pos_hint: {"center_x": .5}
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, .4
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+	# Creating Icon view
+    FileChooserIconView:
+        on_selection: root.select(*args)
+
+    Label:
+        size_hint: 1, None
+        height: "1dp"
+        pos_hint: {"center_x": .5}
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, .4
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+    Button:
+        text: "Done"
+        size_hint: None, None
+        pos_hint: {"right" : 1}
+        width: "100dp"
+        height: "40dp"
+
+        #on_press: close this chooser dialogue
+
+
+
 
