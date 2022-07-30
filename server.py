@@ -6,7 +6,7 @@ from netifaces import interfaces, ifaddresses, AF_INET
 class Server:
 
     HOST = ""
-    PORT = 13201
+    PORT = 34455
 
     def get_ip(self):
         addresses = [i["addr"] for i in ifaddresses("wlp3s0").setdefault(AF_INET, [{"addr": "0.0.0.0"}])]

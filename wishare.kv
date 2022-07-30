@@ -1,14 +1,21 @@
 # This kv file uses the following encoding: utf-8
 
 #:import hex kivy.utils.get_color_from_hex
+#:import Factory kivy.factory.Factory
 
 MainWindow:
+
+
+# Custom widgets
+<Button@Button>:
+    size_hint: 1, None
+    height: "40dp"
+    pos_hint: {"center_x": .5}
 
 # +------------------------------------------------------------+
 # | Main Window                                                |
 # +------------------------------------------------------------+
 <MainWindow>:
-
     orientation:  "vertical"
     canvas.before:
         Color:
@@ -24,7 +31,8 @@ MainWindow:
         text: "WiShare"
         font_size: "24dp"
         bold: True
-        size_hint: 1, .2
+        size_hint: 1, None
+        height: "46dp"
         canvas.before:
             Color:
                 rgb: hex("#0593e6")
@@ -33,7 +41,7 @@ MainWindow:
                 pos: self.pos
 
     Label:
-        text: "Easily share your files from here, and get it all in your browser on an other device."
+        text: "Easily share your files from this device, and get it all in your browser on another device."
         text_size: self.width, None
         font_size: "16dp"
         color: 0, 0, 0
@@ -59,34 +67,38 @@ MainWindow:
         BoxLayout:
             orientation: "horizontal"
             spacing: "10dp"
-            size_hint: 1, None
-            height: "60dp"
 
             TextInput:
+                text: root.DEFAULT_PATH
                 multiline: False
+                size_hint: 1, None
+                height: "40dp"
 
             Button:
                 id: choose_dir_btn
-                text: "Choose Directory"
-                size_hint: .3, 1
-                on_press: root.choose_directory()
+                text: "Choose directory"
+                background_color: hex("#0593e6")
+                size_hint: .6, None
+                on_release: Factory.DirectoryChooser().open()
 
         Button:
             id: start_btn
             text: "START SHARING"
             background_color: hex("#00ff00")
-            size_hint: 1, None
-            height: "60dp"
             disabled: False
-            on_press: root.start_server()
+            on_release: root.start_server()
 
         Label:
-            text: root.addr
-            text_size: self.width, None
+            id: status_label
+            text: root.server_status + "Type the link below in your browser\n" + root.addr
+            text_size: self.width, self.height
+            valign: "top"
+            font_size:"24dp"
             color: 0, 0, 0
-            padding: "20dp", "20dp"
+            padding: "10dp", "20dp"
             size_hint: 1, None
-            height: self.texture_size[1]
+            minimum_height: self.texture_size[1]
+            height: "200dp"
 
             canvas.before:
                 Color:
@@ -99,10 +111,8 @@ MainWindow:
             id: stop_btn
             text: "STOP SHARING"
             background_color: hex("#ff0000")
-            size_hint: 1, None
-            height: "60dp"
             disabled: True
-            on_press: root.stop_server()
+            on_release: root.stop_server()
 
     # +------------------------------------------------------------+
     # | Footer                                                     |
@@ -111,9 +121,10 @@ MainWindow:
         text: "•CreativeMind"
         font_name: "fonts/CreativeMind.ttf"
         font_size: "36px"
+        valign: "bottom"
         color: 0, 0, 0
         size_hint: 1, None
-        height: "72px"
+        height: "90dp"
 
         canvas.before:
             Color:
@@ -137,56 +148,40 @@ MainWindow:
 
 
 # +------------------------------------------------------------+
-# | File Chooser                                               |
+# | Directory Chooser Popup                                    |
 # +------------------------------------------------------------+
+
 <DirectoryChooser>:
-	# Providing the orientation
-	orientation: 'vertical'
-	size_hint: .9, .8
-	pos_hint: {"center_x": .5, "center_y": .5}
+    title: "Select a directory"
+    auto_dismiss: False
+    size_hint: .9, .8
 
-	canvas.before:
-        Color:
-            rgb: hex("#024e63")
-        Rectangle:
-            pos: self.pos
-            size: self.size
-    Label:
-        text: "Select a directory"
-        bold: True
-        size_hint: 1, None
-        height: "40dp"
+    BoxLayout:
+        orientation: "vertical"
+        spacing: "5dp"
 
-    Label:
-        size_hint: 1, None
-        height: "1dp"
-        pos_hint: {"center_x": .5}
-        canvas.before:
-            Color:
-                rgba: 1, 1, 1, .4
-            Rectangle:
-                pos: self.pos
-                size: self.size
+        # Creating Icon view
+        FileChooserIconView:
+            on_selection: root.select(*args)
 
-	# Creating Icon view
-    FileChooserIconView:
-        on_selection: root.select(*args)
+        # Creating Separator
+        Label:
+            size_hint: 1, None
+            height: "1dp"
+            pos_hint: {"center_x": .5}
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, .4
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
 
-    Label:
-        size_hint: 1, None
-        height: "1dp"
-        pos_hint: {"center_x": .5}
-        canvas.before:
-            Color:
-                rgba: 1, 1, 1, .4
-            Rectangle:
-                pos: self.pos
-                size: self.size
-
-    Button:
-        text: "Done"
-        size_hint: None, None
-        pos_hint: {"right" : 1}
-        width: "100dp"
-        height: "40dp"
-        #on_press: close this chooser dialogue
+        # Creating Command buttons
+        Button:
+            text: "Done"
+            background_color: hex("#0593e6")
+            size_hint: None, None
+            pos_hint: {"right" : .9}
+            width: "100dp"
+            height: "40dp"
+            on_release: root.dismiss()
