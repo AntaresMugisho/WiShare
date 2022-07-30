@@ -3,7 +3,9 @@ import random
 from http.server import SimpleHTTPRequestHandler
 from socketserver import TCPServer
 from netifaces import interfaces, ifaddresses, AF_INET
-class Server:
+
+
+class Server():
 
     HOST = ""
     PORT = 34455
@@ -13,27 +15,29 @@ class Server:
         return "".join(addresses)
 
     def start_server(self):
+        global httpd
         handler = SimpleHTTPRequestHandler
-        server = TCPServer((self.HOST, self.PORT), handler)
 
-        print("Server started")
-        print(f"Serving on : {self.get_ip()}:{self.PORT}")
-        server.serve_forever()
+        try:
+            httpd = TCPServer((self.HOST, self.PORT), handler)
+
+        except OSError:
+            httpd = TCPServer((self.HOST, self.PORT+1), handler)
+
+        print(f"Server started\n"
+              f"Serving on : {self.get_ip()}:{self.PORT}")
+
+        httpd.serve_forever()
+
 
     def close_server(self):
         try:
-            self.close_server()
+            httpd.server_close()
             print("Server stopped")
 
-        except Exception as e:
-            print("Unable to stop server")
-            print("ERR.SV.26:", e)
+        except NameError:
+            pass
 
-    def essai(self):
-        a = random.randint(12, 20)
-        print(a)
-        if a == 12:
-            return 'Antares'
 
 if __name__ == "__main__":
     server = Server()

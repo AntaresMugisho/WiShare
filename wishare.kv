@@ -69,7 +69,8 @@ MainWindow:
             spacing: "10dp"
 
             TextInput:
-                text: root.DEFAULT_PATH
+                id: path_input
+                text: root.PATH
                 multiline: False
                 size_hint: 1, None
                 height: "40dp"
@@ -90,7 +91,7 @@ MainWindow:
 
         Label:
             id: status_label
-            text: root.server_status + "Type the link below in your browser\n" + root.addr
+            text: root.server_status + "Type the link below in your browser\n\n" + root.addr
             text_size: self.width, self.height
             valign: "top"
             font_size:"24dp"
