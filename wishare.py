@@ -11,7 +11,8 @@ from kivy.properties import StringProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.popup import Popup
 
-from server import Server
+import server
+from server import *
 
 # Resizing Window on Desktop
 is_android = 'ANDROID_STORAGE' in environ
@@ -30,14 +31,13 @@ class MainWindow(BoxLayout):
     server_status = StringProperty("Not serving\n" )
     addr = StringProperty("http://192.168.__.__:_____" )
     #stop_btn = ObjectProperty()
-    server = Server()
 
     def start_server(self):
         self.server_status = "Server started\n"
-        self.addr = f"http://{self.server.get_ip()}:{Server.PORT}"
+        self.addr = f"http://{server.HOST}:{server.PORT}"
         self.ids.status_label.bold = True
 
-        self.th = Thread(target=self.server.start_server)
+        self.th = Thread(target=server.start_server, args=self.PATH)
         self.th.start()
 
         self.ids.choose_dir_btn.disabled = True
@@ -45,7 +45,7 @@ class MainWindow(BoxLayout):
         self.ids.stop_btn.disabled = False
 
     def stop_server(self):
-        self.server.close_server()
+        server.close_server()
 
         self.server_status = "Server stopped\n"
         self.addr = "http://192.168.__.__:_____"
@@ -61,6 +61,7 @@ class DirectoryChooser(Popup):
         try:
             self.PATH = args[1][0]
             self.PATH = "/".join(self.PATH.split("/")[:-1])
+            self.PATH = str(self.PATH)
 
             print(self.PATH)
 
@@ -71,8 +72,7 @@ class DirectoryChooser(Popup):
             print("ERR_65_WIS: ", e)
 
         #finally:
-        #    if self.PATH:
-        #        print(f"Path actif : {self.PATH}")
+            #self.ids.path_input.text = self.PATH
 
 class WiShareApp(App):
     pass
